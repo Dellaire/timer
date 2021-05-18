@@ -1,0 +1,50 @@
+<html>
+
+    <body>
+    
+        <div align="center">
+            <h1 align="center">Timer</h1>
+            <svg id="timer" width="210" height="210">
+                <circle cx="105" cy="105" r="100" stroke="black" stroke-width="5" fill="white" />
+            </svg>
+            <br/>
+            <button onclick="startTimer(55,1000)" style="margin-top:10;color:white;background-color:black;border:none">START</button>
+        </div>
+        
+        <script type="text/javascript">
+            
+            function startTimer(seconds, tickspeedMilliseconds) {
+            
+                var currentTicks = 0;
+                const maxTicks = 60000 / tickspeedMilliseconds;
+                const secondsInTicks = seconds * 1000 / tickspeedMilliseconds;
+                
+                setInterval(drawStep, tickspeedMilliseconds, 105, 105, 100);
+                
+                function drawStep(middleX, middleY, radius) {
+                
+                    if(currentTicks < secondsInTicks) {
+                    
+                        var rad1 = ((currentTicks) / maxTicks) * 2 * Math.PI;
+                        var rad2 = ((currentTicks + 1) / maxTicks) * 2 * Math.PI;
+                        var x1 = middleX + (Math.sin(rad1) * radius);
+                        var y1 = middleY - (Math.cos(rad1) * radius);
+                        var x2 = middleX + (Math.sin(rad2) * radius);
+                        var y2 = middleY - (Math.cos(rad2) * radius);
+                        
+                        element = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                        element.setAttributeNS(null, 'points', `${middleX},${middleY} ${x1},${y1} ${x2},${y2}`);
+                        element.setAttributeNS(null, 'style', 'fill:black;stroke:black');
+                        var svg = document.getElementById('timer');
+                        svg.appendChild(element);
+                        
+                        currentTicks++;
+                    }
+                }
+            }
+            
+        </script>
+        
+    </body>    
+    
+</html>
