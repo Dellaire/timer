@@ -8,22 +8,27 @@
                 <circle cx="105" cy="105" r="100" stroke="black" stroke-width="5" fill="white" />
             </svg>
             <br/>
-            <button onclick="startTimer(55,1000)" style="margin-top:10;color:white;background-color:black;border:none">START</button>
+            <button onclick="startTimer(55,100)" style="margin-top:10;color:white;background-color:black;border:none">START</button>
+            <br/>
+            <button onclick="stopTimer()" style="margin-top:10;color:white;background-color:black;border:none">STOP</button>
         </div>
         
         <script type="text/javascript">
             
-            function startTimer(seconds, tickspeedMilliseconds) {
+            var stop = false;
             
+            function startTimer(seconds, tickSpeedMilliseconds) {
+            
+                stop = false;
                 var currentTicks = 0;
-                const maxTicks = 60000 / tickspeedMilliseconds;
-                const secondsInTicks = seconds * 1000 / tickspeedMilliseconds;
+                const maxTicks = 60000 / tickSpeedMilliseconds;
+                const secondsInTicks = seconds * 1000 / tickSpeedMilliseconds;
                 
-                setInterval(drawStep, tickspeedMilliseconds, 105, 105, 100);
+                setInterval(drawStep, tickSpeedMilliseconds, 105, 105, 100);
                 
                 function drawStep(middleX, middleY, radius) {
                 
-                    if(currentTicks < secondsInTicks) {
+                    if(currentTicks < secondsInTicks && !stop) {
                     
                         var rad1 = ((currentTicks) / maxTicks) * 2 * Math.PI;
                         var rad2 = ((currentTicks + 1) / maxTicks) * 2 * Math.PI;
@@ -41,6 +46,11 @@
                         currentTicks++;
                     }
                 }
+            }
+            
+            function stopTimer() {
+            
+                stop = true;
             }
             
         </script>
